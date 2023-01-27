@@ -1,20 +1,27 @@
 import XMonad
 import Data.Monoid
 import System.Exit
-import XMonad.Hooks.ManageDocks
+import qualified XMonad.StackSet as W
+
+-- Util
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+
+-- Hooks
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
-import qualified XMonad.StackSet as W
+
+-- Data
 import qualified Data.Map        as M
 
 -- Layout
 import XMonad.Layout.Spacing
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.GridVariants
+import XMonad.Layout.NoBorders
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -124,7 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
@@ -186,7 +193,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 
-myLayout = avoidStruts (spacing 5 $ tiled ||| Mirror tiled ||| Full ||| Grid (16/10) ||| ThreeColMid 1 (3/100) (1/2))
+myLayout = avoidStruts (spacing 5 $ tiled ||| Mirror tiled ||| Grid (16/10) ||| ThreeColMid 1 (3/100) (1/2)) ||| noBorders Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
