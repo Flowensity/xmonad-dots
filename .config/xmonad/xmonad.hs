@@ -13,7 +13,6 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
-import XMonad.Hooks.SetWMName
 
 -- Data
 import qualified Data.Map        as M
@@ -260,8 +259,7 @@ myLogHook = do
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = do
-	setWMName "LG3D"
+myStartupHook = return()
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
