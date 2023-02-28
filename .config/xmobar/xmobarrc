@@ -3,14 +3,13 @@
    -- ttf-mononoki
    -- wqy-zenhei
 
-Config { overrideRedirect = False
-       , font     = "xft:Source Code Pro Medium:size = 12"
-       , additionalFonts = [ "xft:WenQuanYi Zen Hei:size = 12"
-			   , "xft:mononoki Nerd Font:size = 12" 
-	                   ]
+Config { font     = "Source Code Pro Medium 14"
+         , additionalFonts = [ "WenQuanYi Zen Hei 14"
+			                       , "mononoki Nerd Font 14" 
+	                           ]
        , bgColor  = "#5f5f5f"
        , fgColor  = "#f8f8f2"
-       , position = TopW L 90
+       , position = TopSize L 90 25
        , commands = [ Run Cpu 
                         [ "-L", "30"
                         , "-H", "70"
