@@ -6,6 +6,7 @@ import qualified XMonad.StackSet as W
 -- Util
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Util.Loggers
 
 -- Hooks
 import XMonad.Hooks.ManageDocks
@@ -47,7 +48,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#66ffff"
+myFocusedBorderColor = "#05deed"
 
 -- Key bindings. Add, modify or remove key bindings here.
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -181,17 +182,45 @@ myLogHook = return()
 myStartupHook :: X ()
 myStartupHook = do
     spawn "killall trayer"
-    spawnOnce "feh --bg-scale ~/wallpaper/background.png"
+    spawnOnce "feh --bg-scale ~/wallpaper/wallhaven-qz2d65_1920x1080.png"
     spawnOnce "picom"
     spawnOnce "nm-applet"
     spawnOnce "cbatticon - r"
     spawnOnce "volumeicon"
     spawn ("sleep 2 && trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --tint 0x5f5f5f --height 25")
 
+myXmobarPP :: PP
+myXmobarPP = def
+    { ppSep             = magenta " • "
+    , ppTitleSanitize   = xmobarStrip
+    , ppCurrent         = wrap " " "" . xmobarBorder "Top" "#8be9fd" 2
+    , ppHidden          = white . wrap " " ""
+    , ppHiddenNoWindows = lowWhite . wrap " " ""
+    , ppUrgent          = red . wrap (yellow "!") (yellow "!")
+    , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
+    , ppExtras          = [logTitles formatFocused formatUnfocused]
+    }
+    where
+    formatFocused   = wrap (white    "[") (white    "]") . magenta . ppWindow
+    formatUnfocused = wrap (lowWhite "[") (lowWhite "]") . blue    . ppWindow
+
+    -- | Windows should have *some* title, which should not not exceed a
+    -- sane length.
+    ppWindow :: String -> String
+    ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
+
+    blue, lowWhite, magenta, red, white, yellow :: String -> String
+    magenta  = xmobarColor "#ff79c6" ""
+    blue     = xmobarColor "#bd93f9" ""
+    white    = xmobarColor "#f8f8f2" ""
+    yellow   = xmobarColor "#f1fa8c" ""
+    red      = xmobarColor "#ff5555" ""
+    lowWhite = xmobarColor "#bbbbbb" ""
+
 main :: IO ()
 main = do
     xmproc <- spawnPipe "xmobar -x 0 ~/.config/xmobar/xmobarrc"  
-    xmonad $ docks $ xmobarProp $ def {
+    xmonad $ docks $ withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey $ def {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,

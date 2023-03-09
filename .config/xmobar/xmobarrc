@@ -15,32 +15,32 @@ Config { font     = "Source Code Pro Medium 14"
                         , "-H", "70"
                         , "--high", "red"
     			, "--normal", "yellow"
-   			, "--low", "green"
+   			, "--low", "lightgreen"
                         ] 10
                     , Run DynNetwork ["-t", "<fn=2>  <rx>KB  <tx>KB</fn>", "--minwidth", "2"
 				     , "-L", "1024000"
 				     , "-H", "5120000"
 				     , "--high", "red"	 
 				     , "--normal", "yellow"
-				     , "--low", "green"
+				     , "--low", "lightgreen"
 				     ] 10 
                     , Run Memory ["--template", "Mem: <usedratio>%"
 				 , "-L", "30"
 				 , "-H", "70"
 				 , "--high", "red"
     				 , "--normal", "yellow"
-   			         , "--low", "green"
+   			         , "--low", "lightgreen"
 				 ] 10
                     , Run Swap [ "-L", "30"
                                , "-H", "70"
                                , "--high", "red"
                                , "--normal", "yellow"
-                               , "--low", "green"
+                               , "--low", "lightgreen"
 			       ] 10
                     , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
                     , Run XMonadLog
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "<fn=1>%XMonadLog%</fn> }{ %dynnetwork% | %cpu% | %memory% * %swap% | %date% "
+       , template = "<fc=#8be9fd><fn=1>%XMonadLog%</fn></fc> }{ %dynnetwork% | %cpu% | %memory% * %swap% | %date% "
       } 
