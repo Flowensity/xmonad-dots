@@ -42,5 +42,5 @@ Config { font     = "Source Code Pro Medium 14"
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "<fc=#8be9fd><fn=1>%XMonadLog%</fn></fc> }{ %dynnetwork% | %cpu% | %memory% * %swap% | %date% "
+       , template = "<fn=1>%XMonadLog%</fn> }{ %dynnetwork% | %cpu% | %memory% * %swap% | %date% "
       } 
