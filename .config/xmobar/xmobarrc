@@ -31,16 +31,10 @@ Config { font     = "Source Code Pro Medium 14"
     				 , "--normal", "yellow"
    			         , "--low", "lightgreen"
 				 ] 10
-                    , Run Swap [ "-L", "30"
-                               , "-H", "70"
-                               , "--high", "red"
-                               , "--normal", "yellow"
-                               , "--low", "lightgreen"
-			       ] 10
                     , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
                     , Run XMonadLog
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "<fc=#8be9fd><fn=1>%XMonadLog%</fn></fc> }{ %dynnetwork% | %cpu% | %memory% * %swap% | %date% "
+       , template = "<fc=#8be9fd><fn=1>%XMonadLog%</fn></fc> }{ %dynnetwork% | %cpu% | %memory% | %date% "
       } 
